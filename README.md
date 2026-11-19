@@ -9,7 +9,7 @@ La interfaz está en inglés. Incluye dos visores, selección de serie y adquisi
 Requisitos: Docker con Compose y conexión a internet para descargar el caso público desde TCIA.
 
 ```sh
-git clone https://github.com/dimitri-maciel/axivol-tracker.git oncomorph-lesion-tracker
+git clone https://github.com/dimitri-maciel/oncomorph-lesion-tracker.git
 cd oncomorph-lesion-tracker/hcc-tace-lab
 mkdir -p data
 export HCC_UID=$(id -u) HCC_GID=$(id -g)
