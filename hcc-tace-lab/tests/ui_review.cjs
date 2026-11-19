@@ -4,7 +4,8 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const path=require('node:path');
 (async()=>{
- const out=path.resolve(process.env.AXIVOL_QA_DIR||'output/ui');
+ const axePath=process.env.ONCOMORPH_AXE_PATH || process.env.AXIVOL_AXE_PATH;
+ const out=path.resolve(process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR || 'output/ui');
  await fs.mkdir(out,{recursive:true});
  const browser=await chromium.launch({headless:true});
  const page=await browser.newPage({viewport:{width:1600,height:1000},acceptDownloads:true,bypassCSP:true});
@@ -25,16 +26,19 @@ const path=require('node:path');
   await page.waitForFunction(()=>document.getElementById('volume-value').textContent==='495.04');
  };
  const audit=async label=>{
-  if(!process.env.AXIVOL_AXE_PATH)return;
-  await page.addScriptTag({path:process.env.AXIVOL_AXE_PATH});
+  if(!axePath)return;
+  await page.addScriptTag({path:axePath});
   const a=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}}));
   const violations=a.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.map(n=>({target:n.target,reason:n.failureSummary}))}));
   await fs.writeFile(path.join(out,'accessibility-'+label+'.json'),JSON.stringify({violations,incomplete:a.incomplete.map(v=>v.id)},null,2));
   assert.equal(violations.length,0,JSON.stringify(violations));
  };
  try{
-  await page.goto((process.env.AXIVOL_URL||'http://127.0.0.1:8770')+'/?case=HCC_002');
+  await page.goto((process.env.ONCOMORPH_URL || process.env.AXIVOL_URL || 'http://127.0.0.1:8770')+'/?case=HCC_002');
   await both();await calculate();
+  assert.equal(await page.title(),'OncoMorph: Lesion Tracker — Study comparison');
+  const home=page.getByRole('link',{name:'OncoMorph: Lesion Tracker home'});
+  assert.equal(await home.innerText(),'OncoMorph: Lesion Tracker');
   assert.equal(await page.locator('html').getAttribute('lang'),'en');
   assert.equal(await page.locator('.study-sequence').count(),0);
   assert.ok((await page.locator('#case').boundingBox()).height>=44);
@@ -119,10 +123,10 @@ const path=require('node:path');
   const viewportBoxes={pre:await page.locator('#pre-viewport').boundingBox(),post:await page.locator('#post-viewport').boundingBox()};
   await fs.writeFile(path.join(out,'viewport-boxes.json'),JSON.stringify(viewportBoxes));
   const imageEvent=page.waitForEvent('download',{timeout:30000});await page.locator('#capture').click();
-  const image=await imageEvent;assert.equal(image.suggestedFilename(),'Axivol_Tracker_HCC_002.png');
-  await image.saveAs(path.join(out,'axivol-export.png'));
+  const image=await imageEvent;assert.equal(image.suggestedFilename(),'OncoMorph_Lesion_Tracker_HCC_002.png');
+  await image.saveAs(path.join(out,'oncomorph-export.png'));
   await page.locator('#image-download').evaluate(e=>e.hidden=true);await page.mouse.move(2,2);
-  await page.screenshot({path:path.join(out,'axivol-desktop.png'),fullPage:true});
+  await page.screenshot({path:path.join(out,'oncomorph-desktop.png'),fullPage:true});
   checks.push('PNG export contains the displayed case and real images.');
   await audit('desktop');
   for(const [label,width,height] of [['laptop',1280,800],['tablet',1024,768],['mobile',390,844],['narrow',320,740]]){
@@ -137,11 +141,11 @@ const path=require('node:path');
     await audit('mobile');
     await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo(0,0);});
     await page.mouse.move(1,1);
-    await page.screenshot({path:path.join(out,'axivol-mobile.png'),fullPage:true});
+    await page.screenshot({path:path.join(out,'oncomorph-mobile.png'),fullPage:true});
    }
   }
   checks.push('Both real viewports usable at 1600, 1280, 1024, 390 and 320 px; no horizontal overflow.');
-  if(process.env.AXIVOL_AXE_PATH)checks.push('Zero automated WCAG A/AA violations on desktop and mobile.');
+  if(axePath)checks.push('Zero automated WCAG A/AA violations on desktop and mobile.');
   await page.route('**/slice?**',r=>r.fulfill({status:500,contentType:'application/json',body:'{"error":"QA transport failure"}'}));
   await page.locator('#level').fill('713');await page.locator('#level').press('Tab');
   await page.waitForFunction(()=>document.getElementById('pre-image-state').textContent.startsWith('Image unavailable'));

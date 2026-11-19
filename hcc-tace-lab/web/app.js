@@ -617,7 +617,7 @@ $('capture').addEventListener('click', async () => {
     const download = $('image-download');
     if (download.href.startsWith('blob:')) URL.revokeObjectURL(download.href);
     download.href = URL.createObjectURL(blob);
-    download.download = 'Axivol_Tracker_' + state.case.id + '.png';
+    download.download = 'OncoMorph_Lesion_Tracker_' + state.case.id + '.png';
     download.hidden = false;
     download.click();
   } catch (error) { notice(error.message); }

@@ -1,4 +1,4 @@
-# Axivol Tracker
+# OncoMorph: Lesion Tracker
 
 Aplicación local para explorar tomografías de carcinoma hepatocelular antes y después de TACE, revisar las segmentaciones publicadas y medir su volumen en la geometría original.
 
@@ -9,8 +9,8 @@ La interfaz está en inglés. Incluye dos visores, selección de serie y adquisi
 Requisitos: Docker con Compose y conexión a internet para descargar el caso público desde TCIA.
 
 ```sh
-git clone https://github.com/dimitri-maciel/axivol-tracker.git
-cd axivol-tracker/hcc-tace-lab
+git clone https://github.com/dimitri-maciel/axivol-tracker.git oncomorph-lesion-tracker
+cd oncomorph-lesion-tracker/hcc-tace-lab
 mkdir -p data
 export HCC_UID=$(id -u) HCC_GID=$(id -g)
 docker compose run --build --rm ingest catalog
@@ -20,7 +20,7 @@ docker compose run --rm --entrypoint python ingest -m hcclab.model_assets fetch
 docker compose up --build -d app
 ```
 
-Abre [Axivol Tracker](http://127.0.0.1:8770/?case=HCC_002). La aplicación se sirve únicamente en el equipo local y lee los datos sin modificarlos.
+Abre [OncoMorph: Lesion Tracker](http://127.0.0.1:8770/?case=HCC_002). La aplicación se sirve únicamente en el equipo local y lee los datos sin modificarlos.
 
 ## Documentación
 

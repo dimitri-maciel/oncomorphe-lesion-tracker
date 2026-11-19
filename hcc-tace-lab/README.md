@@ -1,4 +1,4 @@
-# Ejecutar Axivol Tracker
+# Ejecutar OncoMorph: Lesion Tracker
 
 Ejecuta estos comandos desde esta carpeta. Se necesita Docker Desktop y espacio disponible para la colección de 28.57 GB más la extracción temporal. Docker publica el visor en `127.0.0.1:8770` y el contenedor de descarga solo escribe en `data/`.
 

@@ -1,6 +1,6 @@
 # Experimentos POST reproducibles
 
-Este módulo investiga por qué cambia una predicción cuando cambian el contexto, la ventana de imagen, la localización o el modelo. Lee las TC y el SEG originales mediante el catálogo de Axivol. **No necesita un identificador de anotación ni el directorio de cuarentena. No guarda resultados en la aplicación.** Los comparadores de condicionamiento y refinamiento neural sí requieren un baseline experimental congelado.
+Este módulo investiga por qué cambia una predicción cuando cambian el contexto, la ventana de imagen, la localización o el modelo. Lee las TC y el SEG originales mediante el catálogo de OncoMorph. **No necesita un identificador de anotación ni el directorio de cuarentena. No guarda resultados en la aplicación.** Los comparadores de condicionamiento y refinamiento neural sí requieren un baseline experimental congelado.
 
 La máscara PRE `Mass` proporciona centro y caja. La variante hepática usa `Liver ∪ Mass` PRE únicamente para refinar el registro. Todas las máscaras de salida se calculan con intensidades POST. No hay una referencia POST independiente: los números describen ejecución y sensibilidad, no exactitud anatómica ni respuesta al tratamiento.
 
@@ -180,18 +180,18 @@ La referencia debe delimitarla un especialista sin ver primero la predicción de
 
 ### Preparar el caso
 
-Reconstruir la imagen con `docker compose build app`. Desde `hcc-tace-lab`, descargar antes el caso y generar su candidata en la aplicación. Usar su identificador real en `AXIVOL_CANDIDATE_ID`; no escoger una máscara después de ver la referencia.
+Reconstruir la imagen con `docker compose build app`. Desde `hcc-tace-lab`, descargar antes el caso y generar su candidata en la aplicación. Usar su identificador real en `ONCOMORPH_CANDIDATE_ID`; no escoger una máscara después de ver la referencia.
 
 ```bash
 mkdir -p ../output/reference-review
-AXIVOL_CANDIDATE_ID=identificador_de_la_candidata_guardada
+ONCOMORPH_CANDIDATE_ID=identificador_de_la_candidata_guardada
 docker compose run --rm --no-deps -T \
   --volume "$PWD/../output/reference-review:/reference-output" \
   --volume hcc-tace-lab_annotations:/annotations:ro \
   --entrypoint python app -m experiments.prepare_reference \
   --output /reference-output \
   --manifest /app/experiments/manifest.example.json \
-  --case HCC_006 --candidate-id "$AXIVOL_CANDIDATE_ID"
+  --case HCC_006 --candidate-id "$ONCOMORPH_CANDIDATE_ID"
 ```
 
 El comando imprime una carpeta nueva `HCC_006-reference-…`. Contiene:
@@ -220,17 +220,17 @@ La ejecución medida duró **6,14 s, sin incluir el arranque de Slicer**. Es tie
 Para repetir desde `hcc-tace-lab` en macOS, sustituir `PAQUETE` por la carpeta real. La salida QA debe quedar fuera de `reader/`:
 
 ```bash
-AXIVOL_READER_DIR="$PWD/../output/reference-review/PAQUETE/reader"
-AXIVOL_SLICER_QA_DIR="$PWD/../output/slicer-qa"
+ONCOMORPH_READER_DIR="$PWD/../output/reference-review/PAQUETE/reader"
+ONCOMORPH_SLICER_QA_DIR="$PWD/../output/slicer-qa"
 open -n -W -a /Applications/Slicer.app \
-  --env "AXIVOL_READER_DIR=$AXIVOL_READER_DIR" \
-  --env "AXIVOL_SLICER_QA_DIR=$AXIVOL_SLICER_QA_DIR" \
-  --env AXIVOL_SLICER_QA_EXIT=1 \
+  --env "ONCOMORPH_READER_DIR=$ONCOMORPH_READER_DIR" \
+  --env "ONCOMORPH_SLICER_QA_DIR=$ONCOMORPH_SLICER_QA_DIR" \
+  --env ONCOMORPH_SLICER_QA_EXIT=1 \
   --args --no-splash --ignore-slicerrc \
   --python-script "$PWD/experiments/slicer_annotation_smoke.py"
 ```
 
-El script crea una carpeta `run-…` nueva con comprobaciones, capturas y un retorno marcado como ensayo funcional. `AXIVOL_SLICER_QA_EXIT=1` cierra esa instancia de Slicer al terminar; `-W` espera su cierre. No se incorpora el trazo a `reader.zip`, al almacén de candidatas ni a una referencia del evaluador. Nadie debe completar declaraciones expertas para convertir esta prueba en una evaluación anatómica.
+El script crea una carpeta `run-…` nueva con comprobaciones, capturas y un retorno marcado como ensayo funcional. `ONCOMORPH_SLICER_QA_EXIT=1` cierra esa instancia de Slicer al terminar; `-W` espera su cierre. No se incorpora el trazo a `reader.zip`, al almacén de candidatas ni a una referencia del evaluador. Nadie debe completar declaraciones expertas para convertir esta prueba en una evaluación anatómica.
 
 ### Evaluar un retorno auténtico
 

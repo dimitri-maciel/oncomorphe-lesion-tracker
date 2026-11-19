@@ -74,7 +74,7 @@ La respuesta incluye `candidate_id`, `mask_sha256`, caso, serie, adquisición, `
 
 ## Ejecución local y límites
 
-El navegador dibuja triángulos en un canvas WebGL2 con código servido por Axivol. No necesita un motor externo, una biblioteca cargada desde una CDN ni otra inferencia de un modelo. La respuesta transmite geometría y metadatos de procedencia; no manda intensidades de la TC al renderizador 3D. [Referencia oficial de `WebGL2RenderingContext`](https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext).
+El navegador dibuja triángulos en un canvas WebGL2 con código servido por OncoMorph. No necesita un motor externo, una biblioteca cargada desde una CDN ni otra inferencia de un modelo. La respuesta transmite geometría y metadatos de procedencia; no manda intensidades de la TC al renderizador 3D. [Referencia oficial de `WebGL2RenderingContext`](https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext).
 
 La extracción recorta el trabajo a la caja que contiene toda la máscara, sin eliminar foreground. Cuenta las caras antes de reservar sus coordenadas y utiliza un buffer booleano reutilizable. Una operación de construcción se ejecuta a la vez. Los límites de ingeniería son:
 
@@ -124,7 +124,7 @@ Para repetir desde esta carpeta, con un entorno Node que tenga Playwright y Chro
 
 ```sh
 docker compose exec -T -e HCC_PILOT_TEST=1 app python -m unittest discover -s tests -v
-AXIVOL_URL=http://127.0.0.1:8770 AXIVOL_QA_DIR=/tmp/axivol-surface-qa node tests/ui_surface.cjs
+ONCOMORPH_URL=http://127.0.0.1:8770 ONCOMORPH_QA_DIR=/tmp/oncomorph-surface-qa node tests/ui_surface.cjs
 ```
 
 La QA necesita máscaras ya guardadas de ambos casos; no las genera. Estos resultados verifican propiedades del software, no exactitud anatómica. La [revisión de HCC_006 por cortes](hcc006-slice-review.md) registra las irregularidades de la predicción que siguen sin resolver.

@@ -1,8 +1,8 @@
 """Prueba funcional GUI de Slicer; el trazo NO es una referencia experta.
 
 Ejecutar con Slicer --python-script /ruta/experiments/slicer_annotation_smoke.py.
-AXIVOL_READER_DIR apunta solo al paquete ciego reader; AXIVOL_SLICER_QA_DIR
-recibe una carpeta nueva por ejecución. AXIVOL_SLICER_QA_EXIT=1 cierra Slicer
+ONCOMORPH_READER_DIR apunta solo al paquete ciego reader; ONCOMORPH_SLICER_QA_DIR
+recibe una carpeta nueva por ejecución. ONCOMORPH_SLICER_QA_EXIT=1 cierra Slicer
 al finalizar; por defecto deja la escena QA claramente identificada abierta.
 
 Paint recibe eventos de ratón mediante la utilidad oficial clickAndDrag; este
@@ -81,8 +81,9 @@ def check_geometry(node, grid):
 class AnnotationSmoke:
     """Etapas cooperativas QTimer: carga, eventos Paint, undo/redo y retorno."""
     def __init__(self):
-        reader_value, output_value = os.environ.get('AXIVOL_READER_DIR'), os.environ.get('AXIVOL_SLICER_QA_DIR')
-        require(reader_value and output_value, 'Set AXIVOL_READER_DIR and AXIVOL_SLICER_QA_DIR.')
+        reader_value = os.environ.get('ONCOMORPH_READER_DIR') or os.environ.get('AXIVOL_READER_DIR')
+        output_value = os.environ.get('ONCOMORPH_SLICER_QA_DIR') or os.environ.get('AXIVOL_SLICER_QA_DIR')
+        require(reader_value and output_value, 'Set ONCOMORPH_READER_DIR and ONCOMORPH_SLICER_QA_DIR.')
         self.reader = Path(reader_value).expanduser().resolve()
         output_root = Path(output_value).expanduser().resolve()
         require(self.reader.is_dir(), 'Reader directory does not exist.')
@@ -93,7 +94,8 @@ class AnnotationSmoke:
         self.started = time.monotonic()
         self.finished = False
         self.stage = 'GUI warmup'
-        self.exit_when_completed = os.environ.get('AXIVOL_SLICER_QA_EXIT', '0').lower() in ('1', 'true', 'yes')
+        exit_value = os.environ.get('ONCOMORPH_SLICER_QA_EXIT', os.environ.get('AXIVOL_SLICER_QA_EXIT', '0'))
+        self.exit_when_completed = exit_value.lower() in ('1', 'true', 'yes')
         self.input_hashes = {}
         self.report = {'status': 'running', 'kind': 'slicer_functional_annotation_smoke',
                        'scope': 'FUNCTIONAL TEST SCRIBBLE ONLY. Not an expert reference or anatomical evaluation.',
@@ -169,7 +171,7 @@ class AnnotationSmoke:
         require(not np.any(self.native_mask()), 'POST manual draft must start empty.')
         self.segmentation.SetName('QA FUNCTIONAL SCRIBBLE - NOT EXPERT REFERENCE')
         self.segmentation.GetSegmentation().GetSegment(self.segment_id).SetName('FUNCTIONAL TEST ONLY')
-        slicer.util.mainWindow().setWindowTitle('Axivol functional QA - NOT EXPERT REFERENCE')
+        slicer.util.mainWindow().setWindowTitle('OncoMorph: Lesion Tracker functional QA - NOT EXPERT REFERENCE')
         self.report.update(case_id=self.case['case_id'], package_id=self.case['package_id'],
                            pre_acquisition=self.case['pre']['acquisition'], post_acquisition=self.case['post']['acquisition'],
                            pre_geometry=nrrd_geometry(self.reader/'PRE_CT.nrrd'), post_geometry=self.case['post']['geometry'])
@@ -311,7 +313,7 @@ class AnnotationSmoke:
                            original_file_sha256=self.input_hashes,
                            finished_utc=datetime.now(timezone.utc).isoformat())
         (self.output/'validation.json').write_text(json.dumps(self.report, ensure_ascii=False, indent=2, allow_nan=False)+'\n')
-        print('AXIVOL_SLICER_QA '+json.dumps({'status': self.report['status'], 'output': str(self.output), 'error': error}), flush=True)
+        print('ONCOMORPH_SLICER_QA '+json.dumps({'status': self.report['status'], 'output': str(self.output), 'error': error}), flush=True)
         if self.exit_when_completed:
             qt.QTimer.singleShot(300, lambda: slicer.app.exit(0 if success else 1))
 

@@ -14,9 +14,9 @@ Entregar únicamente la carpeta `reader/`:
 | `README.md`, `open_in_slicer.py` | Instrucciones y ayuda para abrir y guardar la anotación. |
 | `Open_HCC_in_Slicer.command` | Acceso para macOS; abre una instancia nueva de Slicer instalado en `/Applications/Slicer.app`. |
 
-La carpeta `manager/` queda con el coordinador: contiene manifiesto de evaluación, candidata automática y soporte válido. **No entregar al lector `candidate.nrrd`, `candidate.json`, estadísticas, capturas ni comparaciones de Axivol.** Tampoco mostrar otras predicciones para que escoja una. No añadir la máscara automática a la escena de Slicer.
+La carpeta `manager/` queda con el coordinador: contiene manifiesto de evaluación, candidata automática y soporte válido. **No entregar al lector `candidate.nrrd`, `candidate.json`, estadísticas, capturas ni comparaciones de OncoMorph.** Tampoco mostrar otras predicciones para que escoja una. No añadir la máscara automática a la escena de Slicer.
 
-El lector puede consultar PRE para confirmar identidad, pero traza POST desde una segmentación vacía. Copiar, transformar o corregir la máscara Axivol produce una anotación asistida y potencialmente sesgada por anclaje; no es el brazo independiente. Si ya vio la salida, debe declarar `model_output_seen: true`; para una referencia independiente se necesita otro lector que no la haya visto.
+El lector puede consultar PRE para confirmar identidad, pero traza POST desde una segmentación vacía. Copiar, transformar o corregir la máscara OncoMorph produce una anotación asistida y potencialmente sesgada por anclaje; no es el brazo independiente. Si ya vio la salida, debe declarar `model_output_seen: true`; para una referencia independiente se necesita otro lector que no la haya visto.
 
 ## 2. Confirmar el objetivo antes de dibujar
 
@@ -73,6 +73,6 @@ Completar `reader_form.json` de la carpeta devuelta: identificador seudónimo de
 
 Conservar las anotaciones originales de cada lector. Cuando sea posible, obtener dos anotaciones independientes y adjudicar desacuerdos sin borrar sus versiones. HCC_002 y HCC_006 siguen siendo desarrollo; una referencia nueva de estos casos no los convierte en prueba de generalización.
 
-El diseño sigue la recomendación de definir y documentar el estándar de referencia, formación de anotadores, herramientas y desacuerdos de **CLAIM 2024**, ítems 14–18: [texto primario](https://pmc.ncbi.nlm.nih.gov/articles/PMC11304031/), [DOI verificado](https://doi.org/10.1148/ryai.240300). Las decisiones de cegamiento y retorno pertenecen al protocolo específico de Axivol; no afirman que el paquete ya se haya validado.
+El diseño sigue la recomendación de definir y documentar el estándar de referencia, formación de anotadores, herramientas y desacuerdos de **CLAIM 2024**, ítems 14–18: [texto primario](https://pmc.ncbi.nlm.nih.gov/articles/PMC11304031/), [DOI verificado](https://doi.org/10.1148/ryai.240300). Las decisiones de cegamiento y retorno pertenecen al protocolo específico de OncoMorph; no afirman que el paquete ya se haya validado.
 
 Datos originales: Moawad et al., *HCC-TACE-Seg*, The Cancer Imaging Archive, 2021. [DOI 10.7937/TCIA.5FNA-0924](https://doi.org/10.7937/TCIA.5FNA-0924), licencia [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Estas copias se convirtieron de DICOM a NRRD conservando valores HU y geometría; el segmento PRE conserva la etiqueta publicada `Mass`. Las imágenes derivadas no son una nueva referencia POST ni una aprobación por sus autores.

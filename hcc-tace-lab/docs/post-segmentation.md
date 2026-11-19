@@ -1,4 +1,4 @@
-# Máscaras POST: guía del primer algoritmo de Axivol
+# Máscaras POST: guía del primer algoritmo de OncoMorph
 
 Esta página documenta el método asistido con región, semilla y límites HU. El flujo posterior de localización y generación automática se explica en la [guía automática POST](automatic-post-segmentation.md).
 
@@ -43,11 +43,11 @@ El artículo de Moawad y colaboradores describe imágenes antes y después de TA
 
 La colección se diseñó, entre otros usos, para desarrollar segmentación y predicción a partir de imágenes previas al procedimiento. Ese objetivo es coherente con su enfoque en PRE; **el artículo no declara una causa específica por la que no se generaron máscaras POST equivalentes**. No debemos atribuir la omisión a falta de tiempo, imposibilidad técnica o una decisión clínica que los autores no reportan.
 
-Para Axivol, la referencia POST queda pendiente porque no contamos con una delimitación POST independiente y revisada del objetivo que queremos medir. Generar un candidato no resuelve automáticamente esa falta de referencia.
+Para OncoMorph, la referencia POST queda pendiente porque no contamos con una delimitación POST independiente y revisada del objetivo que queremos medir. Generar un candidato no resuelve automáticamente esa falta de referencia.
 
 ### Reconstrucción del método publicado: alcance A–K
 
-Esta reconstrucción corresponde al artículo del dataset, **no al algoritmo nuevo de Axivol**. Se separa lo reportado de lo que falta para repetirlo.
+Esta reconstrucción corresponde al artículo del dataset, **no al algoritmo nuevo de OncoMorph**. Se separa lo reportado de lo que falta para repetirlo.
 
 | Apartado | Evidencia y límite |
 | --- | --- |
@@ -75,7 +75,7 @@ Desde la carpeta `hcc-tace-lab`, inicia la versión que incluye el editor:
 docker compose up -d --build app
 ```
 
-Abre [Axivol](http://127.0.0.1:8770/). Para el caso piloto público puede usarse [HCC_002](http://127.0.0.1:8770/?case=HCC_002), siempre que sus archivos ya se hayan descargado según el [README](../README.md). Esta guía no contiene un resultado de segmentación POST de ese caso.
+Abre [OncoMorph](http://127.0.0.1:8770/). Para el caso piloto público puede usarse [HCC_002](http://127.0.0.1:8770/?case=HCC_002), siempre que sus archivos ya se hayan descargado según el [README](../README.md). Esta guía no contiene un resultado de segmentación POST de ese caso.
 
 En **Study details**, elige la serie y adquisición del visor posterior. Comprueba su cobertura y revisa los cortes antes de seleccionar la región. Las fases, la identidad de la lesión y su interpretación siguen requiriendo revisión humana; la selección cronológica automática no las certifica.
 
@@ -205,7 +205,7 @@ Para volver a ejecutar exactamente un experimento hay que conservar los archivos
 | Destino del contenedor | Contenido | Acceso de la aplicación |
 | --- | --- | --- |
 | `/data` | Descargas y catálogo del dataset. | Solo lectura. |
-| `/annotations` | Candidatos generados por Axivol. | Lectura y escritura en un volumen Docker independiente. |
+| `/annotations` | Candidatos generados por OncoMorph. | Lectura y escritura en un volumen Docker independiente. |
 
 Recrear el contenedor conserva el volumen de anotaciones. Eliminar ese volumen también elimina los candidatos almacenados: exporta los que necesites conservar antes de hacerlo. Ni datos médicos ni anotaciones generadas se incorporan a Git o al contexto de construcción de la imagen.
 
@@ -283,13 +283,13 @@ Esta sección es un **plan futuro**, no un resultado disponible ni una función 
 
 1. Un experto define el objetivo y los criterios de inclusión de tejidos, fase, cobertura y calidad de imagen.
 2. Se selecciona un conjunto piloto POST con criterios documentados. Se registran también exclusiones y fallos; no se conservan únicamente ejemplos visualmente favorables.
-3. Uno o, preferentemente, más anotadores delimitan el objetivo en las imágenes originales, sin ver la salida de Axivol que se evaluará.
+3. Uno o, preferentemente, más anotadores delimitan el objetivo en las imágenes originales, sin ver la salida de OncoMorph que se evaluará.
 4. Las discrepancias se revisan con una regla de consenso o adjudicación previamente definida. Se conservan anotaciones individuales, revisiones e incertidumbres.
 5. La referencia se coloca en la misma rejilla física que el candidato mediante una conversión comprobada. No basta con que las matrices tengan el mismo tamaño.
 
 3D Slicer ofrece herramientas de anotación y edición apropiadas para preparar ese flujo [5]. Sus funciones **Grow from seeds**, **Threshold** e **Islands** no son intercambiables: Grow from seeds no es la misma operación que nuestro componente conexo por umbral. Cualquier edición o remuestreo utilizado debe quedar registrado.
 
-Una máscara producida por Axivol y después corregida puede ser útil para estudiar **edición asistida**, pero no constituye por sí sola una referencia independiente para demostrar que la salida inicial era correcta. Si solo hay un anotador, debe decirse; no se puede afirmar acuerdo entre observadores.
+Una máscara producida por OncoMorph y después corregida puede ser útil para estudiar **edición asistida**, pero no constituye por sí sola una referencia independiente para demostrar que la salida inicial era correcta. Si solo hay un anotador, debe decirse; no se puede afirmar acuerdo entre observadores.
 
 ### Separar desarrollo de evaluación
 
@@ -334,7 +334,7 @@ Un estudio experimental con fantomas documenta que el lipiodol puede producir ar
 
 ## 10. Recursos y referencias verificadas
 
-Las tres referencias científicas con DOI de esta sección se contrastaron por título, autores y metadatos en **PubMed y Crossref** el 11 de noviembre de 2026. Las páginas técnicas se consultaron en sus sitios oficiales. Las versiones ejecutadas por Axivol se fijan en [`requirements.txt`](../requirements.txt) y se registran en cada candidato; las herramientas citadas como alternativas no se consideran instaladas por el hecho de aparecer aquí.
+Las tres referencias científicas con DOI de esta sección se contrastaron por título, autores y metadatos en **PubMed y Crossref** el 11 de noviembre de 2026. Las páginas técnicas se consultaron en sus sitios oficiales. Las versiones ejecutadas por OncoMorph se fijan en [`requirements.txt`](../requirements.txt) y se registran en cada candidato; las herramientas citadas como alternativas no se consideran instaladas por el hecho de aparecer aquí.
 
 1. **Moawad, A. W., et al. (2023).** *Multimodality annotated hepatocellular carcinoma data set including pre- and post-TACE with imaging segmentation*. Scientific Data, 10, 33. [Texto completo](https://pmc.ncbi.nlm.nih.gov/articles/PMC9849450/), [DOI: 10.1038/s41597-023-01928-3](https://doi.org/10.1038/s41597-023-01928-3), [PMID: 36653372](https://pubmed.ncbi.nlm.nih.gov/36653372/). **Uso:** distinguir datos PRE, POST, anotaciones, fases y proceso de consenso.
 2. **SimpleITK: ConnectedThresholdImageFilter.** [Documentación oficial](https://simpleitk.org/doxygen/latest/html/classitk_1_1simple_1_1ConnectedThresholdImageFilter.html). **Uso:** entender el método clásico de selección por semilla e intervalo; referencia conceptual, no dependencia ejecutada por este baseline.
@@ -342,7 +342,7 @@ Las tres referencias científicas con DOI de esta sección se contrastaron por t
 4. **DICOM, Image Plane Module, C.7.6.2.** [Estándar oficial](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.7.6.2.html). **Uso:** orientación, posición, orden de Pixel Spacing y diferencia entre espesor y separación.
 5. **3D Slicer: Segment Editor.** [Documentación oficial](https://slicer.readthedocs.io/en/latest/user_guide/modules/segmenteditor.html). **Uso:** preparar una futura anotación experta con herramientas identificadas y parámetros registrados.
 6. **Taha, A. A., y Hanbury, A. (2015).** *Metrics for evaluating 3D medical image segmentation: analysis, selection, and tool*. BMC Medical Imaging, 15, 29. [Texto completo](https://pmc.ncbi.nlm.nih.gov/articles/PMC4533825/), [DOI: 10.1186/s12880-015-0068-x](https://doi.org/10.1186/s12880-015-0068-x), [PMID: 26263899](https://pubmed.ncbi.nlm.nih.gov/26263899/). **Uso:** métricas de solapamiento, distancias y límites de interpretación.
-7. **Ting, Y.-L., et al. (2023).** *Quantitative Assessment of Lipiodol-Related Artifact Reduction for Dual-Energy Computed Tomography After Transcatheter Arterial Chemoembolization: A Phantom Study Evaluating the Use of Metal Artifact Reduction Algorithms*. Journal of Computer Assisted Tomography, 47(5), 704–712. [DOI: 10.1097/RCT.0000000000001477](https://doi.org/10.1097/RCT.0000000000001477), [PMID: 37707399](https://pubmed.ncbi.nlm.nih.gov/37707399/). **Uso:** evidencia experimental de alteraciones técnicas por lipiodol; se revisó el resumen, no un protocolo de corrección aplicado en Axivol.
+7. **Ting, Y.-L., et al. (2023).** *Quantitative Assessment of Lipiodol-Related Artifact Reduction for Dual-Energy Computed Tomography After Transcatheter Arterial Chemoembolization: A Phantom Study Evaluating the Use of Metal Artifact Reduction Algorithms*. Journal of Computer Assisted Tomography, 47(5), 704–712. [DOI: 10.1097/RCT.0000000000001477](https://doi.org/10.1097/RCT.0000000000001477), [PMID: 37707399](https://pubmed.ncbi.nlm.nih.gov/37707399/). **Uso:** evidencia experimental de alteraciones técnicas por lipiodol; se revisó el resumen, no un protocolo de corrección aplicado en OncoMorph.
 8. **DICOM, CT Image Module, C.8.2.** [Estándar oficial](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.8.2.html). **Uso:** transformación lineal de intensidades y condiciones para establecer unidades HU.
 
 ## 11. Qué queda pendiente

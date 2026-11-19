@@ -204,7 +204,7 @@ Desde `hcc-tace-lab`, ejecuta la suite con el caso piloto descargado:
 docker compose exec -T -e HCC_PILOT_TEST=1 app python -m unittest discover -s tests -v
 ```
 
-`tests/ui_refinement.cjs` comprueba la función en un navegador con Playwright. Debe apuntar mediante `AXIVOL_URL` a una instancia de QA con anotaciones temporales: genera versiones para comprobar comparación, exportación, navegación y respuestas tardías. `tests/ui_pre_mask.cjs` verifica que el pincel manual sigue funcionando. Las capturas y reportes de estas ejecuciones se mantienen fuera de Git.
+`tests/ui_refinement.cjs` comprueba la función en un navegador con Playwright. Debe apuntar mediante `ONCOMORPH_URL` a una instancia de QA con anotaciones temporales: genera versiones para comprobar comparación, exportación, navegación y respuestas tardías. `tests/ui_pre_mask.cjs` verifica que el pincel manual sigue funcionando. Las capturas y reportes de estas ejecuciones se mantienen fuera de Git.
 
 ### Validación anatómica pendiente
 
@@ -228,7 +228,7 @@ Separar por paciente el conjunto usado para ajustar radio y pesos del usado para
 
 La documentación oficial de MorphGAC explica la dependencia del preprocesamiento y el efecto de la fuerza de expansión o contracción. MorphACWE admite imágenes y volúmenes, pero requiere que interior y exterior difieran en promedio. Sus interfaces citadas no exponen un parámetro de espaciamiento físico; usarlas directamente exige resolver la anisotropía y las restricciones de la franja. La función `chan_vese` convencional de scikit-image se documenta para 2D, mientras que `morphological_chan_vese` admite 3D: no deben confundirse. [API oficial de segmentación](https://scikit-image.org/docs/stable/api/skimage.segmentation.html).
 
-Estas alternativas no se descartan como inferiores en exactitud; no se han comparado en una evaluación de Axivol. La elección actual prioriza control explícito del cambio y reutilización de dependencias existentes.
+Estas alternativas no se descartan como inferiores en exactitud; no se han comparado en una evaluación de OncoMorph. La elección actual prioriza control explícito del cambio y reutilización de dependencias existentes.
 
 ## Fuentes y alcance de la revisión
 

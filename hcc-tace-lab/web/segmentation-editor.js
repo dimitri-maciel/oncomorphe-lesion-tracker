@@ -87,7 +87,7 @@ export function createSegmentationEditor(adapter) {
     document.getElementById('registration-status').textContent = registration;
     attemptUrl = URL.createObjectURL(new Blob([JSON.stringify(attempt, null, 2)], {type: 'application/json'}));
     $('attempt-export').href = attemptUrl;
-    $('attempt-export').download = 'Axivol_POST_run_' + request.case_id + '_' + Date.now() + '.json';
+    $('attempt-export').download = 'OncoMorph_POST_run_' + request.case_id + '_' + Date.now() + '.json';
   }
 
   function message(text, error = false) {

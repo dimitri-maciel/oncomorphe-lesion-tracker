@@ -1,4 +1,4 @@
-# Axivol Tracker interface
+# OncoMorph: Lesion Tracker interface
 
 The workspace supports reviewing baseline and follow-up CT, inspecting published baseline annotations and comparing separate, unreviewed mask versions. The two real CT images are the primary content. Case selection and exports share the top bar; source selection belongs to each viewport, and measurement provenance remains next to the result.
 
@@ -50,7 +50,7 @@ The default baseline overlay combines an inner one-pixel outline with 15% fill. 
 
 **Edit copy** starts from the published segment. Paint and erase use a physical brush radius, apply to one slice at a time and support undo. Zoom returns to 100% and pan is disabled while editing. Hiding the overlay prevents drawing. The editor rejects stale mask loads and save results after source changes. Saving creates a separate unreviewed version; **Published baseline volume** remains separate from its volume. Saved versions can be previewed and exported, and new edit sessions begin from the original.
 
-`tests/ui_pre_mask.cjs` exercises the real baseline viewport, brush coordinates, mask display, undo, immutable saving, source changes and the separate report fields. Run it against an isolated QA instance with `AXIVOL_URL`; it creates engineering test edits, not clinical annotations.
+`tests/ui_pre_mask.cjs` exercises the real baseline viewport, brush coordinates, mask display, undo, immutable saving, source changes and the separate report fields. Run it against an isolated QA instance with `ONCOMORPH_URL`; it creates engineering test edits, not clinical annotations.
 
 **Refine boundary** creates a separate PRE proposal using a 1–5 mm **Boundary band** (default 3 mm). Manual drafts block refinement until saved or cleared. The version selector distinguishes **Original (published)**, **Edited** and **Refined**; a refined result reports added/removed voxels and changed slices. Source changes invalidate delayed results. No-change and insufficient-contrast outcomes remain explicit, with no accuracy claim. Refinement starts from the published mask, and brush sessions still start from that original.
 
@@ -64,11 +64,11 @@ Geometry and public-case integration checks, from hcc-tace-lab:
 
 Browser checks require Playwright and Chromium outside the application image:
 
-    AXIVOL_URL=http://127.0.0.1:8770 AXIVOL_QA_DIR=output/ui-workspace node tests/ui_workspace.cjs
+    ONCOMORPH_URL=http://127.0.0.1:8770 ONCOMORPH_QA_DIR=output/ui-workspace node tests/ui_workspace.cjs
 
 `ui_workspace.cjs` requires existing automatic masks for HCC_002 (baseline acquisition 1) and HCC_006 (baseline acquisition 3), both published **Mass (2)** with follow-up acquisition 1. It blocks every request except GET/HEAD, activates tools without drawing, and checks that saved candidate metadata stays unchanged. It covers both real viewports, keyboard tabs, tool pausing, overlay hide/show, slice navigation and 1600/1280/390 px layouts. It performs no inference or anatomical assessment. The current layout passed these checks and visual review on November 12, 2026.
 
-`node tests/ui_review.cjs` provides broader display and export regression checks; it accepts `AXIVOL_URL`, `AXIVOL_QA_DIR` and an optional `AXIVOL_AXE_PATH` for axe-core. Tests that generate or edit masks require an isolated QA instance, as described above.
+`node tests/ui_review.cjs` provides broader display and export regression checks; it accepts `ONCOMORPH_URL`, `ONCOMORPH_QA_DIR` and an optional `ONCOMORPH_AXE_PATH` for axe-core. Tests that generate or edit masks require an isolated QA instance, as described above.
 
 Screenshots and JSON reports remain local and excluded from version control; executable checks stay in `tests/`. Automated checks supplement visual inspection and do not establish clinical usability.
 
