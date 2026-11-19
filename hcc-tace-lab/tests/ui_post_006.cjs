@@ -6,9 +6,9 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 
 (async () => {
-  const url = process.env.ONCOMORPH_URL || process.env.AXIVOL_URL;
-  const output = process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR;
-  if (!url || !output) throw new Error('Set ONCOMORPH_URL and ONCOMORPH_QA_DIR (local screenshots only).');
+  const url = process.env.ONCOMORPHE_URL || process.env.ONCOMORPH_URL || process.env.AXIVOL_URL;
+  const output = process.env.ONCOMORPHE_QA_DIR || process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR;
+  if (!url || !output) throw new Error('Set ONCOMORPHE_URL and ONCOMORPHE_QA_DIR (local screenshots only).');
   await fs.mkdir(output, {recursive: true});
   const browser = await chromium.launch({headless: true});
   const page = await browser.newPage({viewport: {width: 1600, height: 1100}});

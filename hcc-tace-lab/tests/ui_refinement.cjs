@@ -1,5 +1,5 @@
 // Real HCC_002 engineering QA, not a statement of segmentation accuracy.
-// Run against an isolated annotation store via ONCOMORPH_URL.
+// Run against an isolated annotation store via ONCOMORPHE_URL.
 const {chromium} = require('playwright');
 const assert = require('node:assert/strict');
 const fs = require('node:fs/promises');
@@ -7,9 +7,9 @@ const path = require('node:path');
 const {createHash} = require('node:crypto');
 
 (async () => {
-  const url = process.env.ONCOMORPH_URL || process.env.AXIVOL_URL;
-  if (!url) throw new Error('Set ONCOMORPH_URL to an isolated QA app.');
-  const out = path.resolve(process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR || 'output/ui-refinement');
+  const url = process.env.ONCOMORPHE_URL || process.env.ONCOMORPH_URL || process.env.AXIVOL_URL;
+  if (!url) throw new Error('Set ONCOMORPHE_URL to an isolated QA app.');
+  const out = path.resolve(process.env.ONCOMORPHE_QA_DIR || process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR || 'output/ui-refinement');
   await fs.mkdir(out, {recursive: true});
   const browser = await chromium.launch({headless: true});
   const page = await browser.newPage({viewport: {width: 1600, height: 1100}, acceptDownloads: true});

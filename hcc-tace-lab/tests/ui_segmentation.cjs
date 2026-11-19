@@ -1,14 +1,14 @@
 // Engineering checks on the public HCC_002 CT, not a lesion reference or clinical validation.
-// Run only against an isolated annotation store, e.g. ONCOMORPH_URL=http://127.0.0.1:8771.
+// Run only against an isolated annotation store, e.g. ONCOMORPHE_URL=http://127.0.0.1:8771.
 const {chromium} = require('playwright');
 const assert = require('node:assert/strict');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 
 (async () => {
-  const url = process.env.ONCOMORPH_URL || process.env.AXIVOL_URL;
-  if (!url) throw new Error('Set ONCOMORPH_URL to an app with an isolated QA annotation store.');
-  const out = path.resolve(process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR || 'output/ui-segmentation');
+  const url = process.env.ONCOMORPHE_URL || process.env.ONCOMORPH_URL || process.env.AXIVOL_URL;
+  if (!url) throw new Error('Set ONCOMORPHE_URL to an app with an isolated QA annotation store.');
+  const out = path.resolve(process.env.ONCOMORPHE_QA_DIR || process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR || 'output/ui-segmentation');
   await fs.mkdir(out, {recursive: true});
   const browser = await chromium.launch({headless: true});
   const page = await browser.newPage({viewport: {width: 1600, height: 1000}, acceptDownloads: true});

@@ -16,7 +16,7 @@ La prioridad científica paralela es obtener referencias POST trazadas por espec
 
 Hay tres objetos diferentes:
 
-| Objeto | Qué representa | Consecuencia para OncoMorph |
+| Objeto | Qué representa | Consecuencia para OncoMorphe |
 | --- | --- | --- |
 | Lesión completa | Contorno del tumor o de la lesión tratada, incluyendo sus componentes viables y necróticos cuando pueden delimitarse. | Es el objetivo inicial, coherente con la etiqueta PRE `Mass` del dataset. Su límite POST requiere una definición acordada con un especialista. |
 | Componente viable | Tejido que conserva un patrón de realce compatible con tumor viable, evaluado con las fases apropiadas. | No se obtiene simplemente restando vóxeles oscuros ni calculando el volumen total. Es otro problema de anotación y validación. |
@@ -36,7 +36,7 @@ Los DOI de los artículos de la matriz se contrastaron con la API pública de Cr
 
 ## 4. Matriz crítica de fuentes
 
-Las cifras de muestra describen las publicaciones; no son resultados de OncoMorph. Las decisiones de la última columna son propuestas nuestras.
+Las cifras de muestra describen las publicaciones; no son resultados de OncoMorphe. Las decisiones de la última columna son propuestas nuestras.
 
 | Fuente primaria y alcance | Evidencia metodológica relevante | Qué podemos trasladar y qué no |
 | --- | --- | --- |
@@ -104,5 +104,5 @@ Los brazos, métricas y criterios de fallo se especifican una sola vez en [el pr
 - Aplicar un corte arbitrario al logit para corregir solo HCC_006.
 - Presentar Dice entre dos ejecuciones del mismo modelo como exactitud anatómica.
 - Ocultar abstenciones o reportar solo casos visualmente convincentes.
-- Reutilizar métricas publicadas de otra tarea como rendimiento esperado de OncoMorph.
+- Reutilizar métricas publicadas de otra tarea como rendimiento esperado de OncoMorphe.
 

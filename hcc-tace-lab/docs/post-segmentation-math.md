@@ -213,7 +213,7 @@ $$
 dz\approx t_{z+1}-t_z>0.
 $$
 
-OncoMorph comprueba esa regularidad antes de utilizar un único `dz`. Una adquisición de un solo corte no permite deducir por sí sola esa separación; tampoco una posición duplicada o irregular puede resolverse inventando un valor.
+OncoMorphe comprueba esa regularidad antes de utilizar un único `dz`. Una adquisición de un solo corte no permite deducir por sí sola esa separación; tampoco una posición duplicada o irregular puede resolverse inventando un valor.
 
 `SliceThickness` describe espesor nominal de reconstrucción. La distancia entre centros de planos describe muestreo espacial. Pueden ser diferentes; no son etiquetas intercambiables.
 
@@ -262,7 +262,7 @@ No se calcula aquí una variación PRE–POST: todavía faltan equivalencia del 
 
 ## 7. Evaluación futura con una referencia independiente
 
-Esta sección define métricas para un **experimento futuro**. No implica que ya existan referencias POST ni que OncoMorph haya obtenido estos resultados.
+Esta sección define métricas para un **experimento futuro**. No implica que ya existan referencias POST ni que OncoMorphe haya obtenido estos resultados.
 
 Llamaremos `A` al candidato y `B` a la referencia experta. Ambos deben describir el mismo objetivo en coordenadas físicas compatibles. Para contar intersecciones voxel a voxel, además deben estar en la misma rejilla mediante una correspondencia comprobada.
 

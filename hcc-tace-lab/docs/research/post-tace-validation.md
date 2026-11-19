@@ -63,7 +63,7 @@ Si no hay acuerdo sobre el límite, conservar esa incertidumbre y no fabricar un
 
 El diseño preferido contempla dos lectores que delimiten POST independientemente, con experiencia y rol documentados, y un adjudicador para desacuerdos. **Su participación todavía debe conseguirse; no se presume disponible.** Si los recursos solo permiten un lector con una segunda revisión, se debe declarar la limitación y conservar una submuestra de doble anotación independiente.
 
-Para evitar que la predicción determine su propia referencia, los lectores no ven las máscaras de OncoMorph ni qué variante se está evaluando. Pueden consultar PRE y la información necesaria para identificar el objetivo, pero trazan el contorno en POST. Las herramientas de anotación y operaciones de interpolación/suavizado deben registrarse y revisarse en axial, coronal y sagital. El resultado no se acepta únicamente porque un software haya unido varios contornos.
+Para evitar que la predicción determine su propia referencia, los lectores no ven las máscaras de OncoMorphe ni qué variante se está evaluando. Pueden consultar PRE y la información necesaria para identificar el objetivo, pero trazan el contorno en POST. Las herramientas de anotación y operaciones de interpolación/suavizado deben registrarse y revisarse en axial, coronal y sagital. El resultado no se acepta únicamente porque un software haya unido varios contornos.
 
 Guardar por separado las anotaciones originales de cada lector, la versión adjudicada y el registro de cambios. Una combinación automática —incluido STAPLE— no resuelve por sí misma que los lectores hayan delimitado objetivos diferentes. Si se utiliza una máscara generada por otro algoritmo como ayuda, documentarlo y evaluar su posible sesgo de anclaje.
 

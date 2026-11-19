@@ -1,6 +1,6 @@
 # Revisar y editar una copia de la máscara PRE
 
-Una máscara que parece demasiado amplia merece revisión, pero su apariencia no basta para concluir que está equivocada. OncoMorph permite distinguir **cómo se muestra la máscara** de **qué vóxeles contiene** y editar una copia conservando la publicada.
+Una máscara que parece demasiado amplia merece revisión, pero su apariencia no basta para concluir que está equivocada. OncoMorphe permite distinguir **cómo se muestra la máscara** de **qué vóxeles contiene** y editar una copia conservando la publicada.
 
 ## Qué representa `Mass`
 
@@ -98,4 +98,4 @@ docker compose exec -T -e HCC_PILOT_TEST=1 app python -m unittest discover -s te
 
 `test_mask_editing.py` comprueba distancias físicas, espaciado anisotrópico, extremos, borrado, reproducción y límites. `test_pre_mask.py` verifica contorno y transparencia, original intacto, PNG binario, volumen, ZIP y separación PRE/POST. `test_pre_sources.py` sustituye cabeceras sintéticas para asegurar su rechazo. `test_candidates.py` incluye transporte HTTP y filtrado de versiones antes del límite de resultados.
 
-Con Playwright instalado, `ONCOMORPH_URL=http://127.0.0.1:8771 node tests/ui_pre_mask.cjs` comprueba controles, pincel, versiones y exportación en el navegador. El puerto debe apuntar a una instancia de QA con almacenamiento de anotaciones temporal: esta prueba pinta y borra puntos elegidos para verificar el programa, no para corregir anatomía. Compara la vista previa y el PNG guardado píxel por píxel. Ninguna de estas pruebas demuestra precisión clínica.
+Con Playwright instalado, `ONCOMORPHE_URL=http://127.0.0.1:8771 node tests/ui_pre_mask.cjs` comprueba controles, pincel, versiones y exportación en el navegador. El puerto debe apuntar a una instancia de QA con almacenamiento de anotaciones temporal: esta prueba pinta y borra puntos elegidos para verificar el programa, no para corregir anatomía. Compara la vista previa y el PNG guardado píxel por píxel. Ninguna de estas pruebas demuestra precisión clínica.

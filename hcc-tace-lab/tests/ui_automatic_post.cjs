@@ -1,15 +1,15 @@
 // Real HCC_002 QA on an isolated annotation store. No fabricated success mask.
-// ONCOMORPH_EXPECT_AUTO defaults to abstained; set success only for a validated API build.
+// ONCOMORPHE_EXPECT_AUTO defaults to abstained; set success only for a validated API build.
 const {chromium} = require('playwright');
 const assert = require('node:assert/strict');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 
 (async () => {
-  const url = process.env.ONCOMORPH_URL || process.env.AXIVOL_URL;
-  if (!url) throw new Error('Set ONCOMORPH_URL to an isolated QA app.');
-  const expected = process.env.ONCOMORPH_EXPECT_AUTO || process.env.AXIVOL_EXPECT_AUTO || 'abstained';
-  const out = path.resolve(process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR || 'output/ui-automatic-post');
+  const url = process.env.ONCOMORPHE_URL || process.env.ONCOMORPH_URL || process.env.AXIVOL_URL;
+  if (!url) throw new Error('Set ONCOMORPHE_URL to an isolated QA app.');
+  const expected = process.env.ONCOMORPHE_EXPECT_AUTO || process.env.ONCOMORPH_EXPECT_AUTO || process.env.AXIVOL_EXPECT_AUTO || 'abstained';
+  const out = path.resolve(process.env.ONCOMORPHE_QA_DIR || process.env.ONCOMORPH_QA_DIR || process.env.AXIVOL_QA_DIR || 'output/ui-automatic-post');
   await fs.mkdir(out, {recursive: true});
   const browser = await chromium.launch({headless: true});
   const page = await browser.newPage({viewport: {width: 1600, height: 1100}, acceptDownloads: true});
